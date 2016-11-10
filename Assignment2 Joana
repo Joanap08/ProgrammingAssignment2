@@ -1,0 +1,61 @@
+##Assignment 3 caching
+
+## Question 1
+
+## Necessary output 
+##a list containing functions to
+##              1. set the matrix
+##              2. get the matrix
+##              3. set the inverse
+##              4. get the inverse
+##         Lat step is a listused as the input to cacheSolve()
+
+##The mean cache given as a suggestion it is a very good example.It helped me a lot.
+##since it clearly guides you through the steps.
+
+makeCacheMatrix <- function(x = matrix()) {
+  
+  beta <- NULL ##it is set up to null, so in each iteration can stores a new cache. assuming that the cache is null.
+  
+  #store the matrix
+  setmatrix= function(y) {
+    # <<-to assign a value to an object in an environment different from the current one
+    x <<- y
+    beta <<- NULL
+  }
+  
+  ##get the matrix
+  getmatrix = function() x
+  
+  ## set the inverse for the cache and stores the cache
+  setinverse = function(inverse) beta<<- inverse
+    ##we now have to store the value in cache 
+  ## get the cached value
+  getinverse = function() beta
+    
+  ## We will ask to return a list with all the elements above
+  list(setmatrix=setmatrix, getmatrix=getmatrix, setinverse=setinverse, getinverse=getinverse)
+}
+##Question2
+cacheSolve<- function(x, ...){
+  #getting the cached value
+  inver<-x$getinverse()
+  
+  #clause to return the value if it was already calculated
+  if(!is.null(inver)) {
+    message("getting cached data")
+    return(inver)
+  }
+  
+  ##otherwise go to the matrix and calculate the cache
+  data<-x$getmatrix()
+  inver<-solve(data,...)
+  x$setinverse(inver)
+  
+  # just send me back the inverse
+  inver
+}
+  
+  ## therefore we can run some matrix such as
+  ## b<-makeCacheMatrix(matrix(c(3,4,20,25), nrow=2,ncol=2))
+  ## to check if it works properly
